@@ -1,25 +1,73 @@
-<html>
-    <head>
-        {{> head}}
-    </head>
-    <body>
-        <h2>Game code</h2>
-        <input type="text" id="codeInput">
-        <button id="createGame">Create game</button>
-        <button id="joinGame">Join game</button>
-        <div style="color: red" id="errorMessage"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
 
-        <script>
-            $('#createGame').on('click', function() {
-                window.location.replace('/white?code=' + $('#codeInput').val());
-            });
-            $('#joinGame').on('click', function() {
-                window.location.replace('/black?code=' + $('#codeInput').val());
-            });
-            var urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('error') == 'invalidCode') {
-                $('#errorMessage').text('Invalid invite code');
-            }
-        </script>
-    </body>
+        h2 {
+            color: #333;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #5cb85c;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        #errorMessage {
+            margin-top: 10px;
+            font-size: 14px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h2>Game code</h2>
+    <input type="text" id="codeInput">
+    <button id="createGame">Create game</button>
+    <button id="joinGame">Join game</button>
+    <div id="errorMessage"></div>
+
+    <script>
+        document.getElementById('createGame').addEventListener('click', function() {
+            window.location.replace('/white?code=' + document.getElementById('codeInput').value);
+        });
+
+        document.getElementById('joinGame').addEventListener('click', function() {
+            window.location.replace('/black?code=' + document.getElementById('codeInput').value);
+        });
+
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('error') === 'invalidCode') {
+            document.getElementById('errorMessage').textContent = 'Invalid invite code';
+        }
+    </script>
+</body>
 </html>
